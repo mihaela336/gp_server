@@ -6,14 +6,7 @@ import cors from "cors";
 // create express object named "app"
 const app = express();
 //create constant to specify the port
-const port = 4000;
-const masterKey = "4VGP2DN-6EWM4SJ-N6FGRHV-Z3PR3TT";
-
-//login variables
-var correctUser = "mihaela";
-var correctPassword = "1234";
-var username = "";
-var password = "";
+const port = 3000;
 
 //use middleware
 app.use(bodyParser.json()); //to support hson encoded bodies
@@ -26,19 +19,6 @@ app.get("/", (req, res) => {
     res.send("Welcome to GP server");
 })
 
-  //route for login logic
-  app.post("/login", (req, res) => {
-    username = req.body.username;
-    password = req.body.password
-    console.log(`Input username is ${username}`);
-    console.log(`Input password is ${password}`);
-    if (username === correctUser && password === correctPassword) {
-        console.log("Much success!");
-    } else {
-        console.log("Wrong credentials");
-    }
-
-})
 
 // get random station route
 app.get("/random", (req,res)=>{
@@ -121,29 +101,13 @@ app.delete("/station/:id", (req, res) => {
     }
   });
 
-  //DELETE All stations
-app.delete("/all", (req, res) => {
-    const userKey = req.query.key;
-    if (userKey === masterKey) {
-      stations = [];
-      res.sendStatus(200);
-    } else {
-      res
-        .status(404)
-        .json({ error: `You are not authorised to perform this action.` });
-    }
-  });
-
-
-  
-
 
 //start server on specified port
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 })
 
-// temporary storage for station data TODO: move to db
+// Test data for charging stations
 var stations = [
     {
         id: 1,
